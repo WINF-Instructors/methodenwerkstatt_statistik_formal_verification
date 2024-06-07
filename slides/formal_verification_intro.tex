@@ -572,6 +572,27 @@
       \end{columns}
       \end{frame}
 
+      \begin{frame}
+        \frametitle{Example Deduction: \(\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash \exists y \, Q(y)\)}
+        
+        \begin{prooftree}
+          \AxiomC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash P(a) \rightarrow \exists y \, Q(y)$}
+          \RightLabel{$\forall$ L}
+          \UnaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash P(a) \rightarrow \exists y \, Q(y)$}
+          
+          \AxiomC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash P(a)$}
+          \RightLabel{$\forall$ L}
+          \UnaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash P(a)$}
+        
+          \RightLabel{$\rightarrow$ E}
+          \BinaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash \exists y \, Q(y)$}
+        
+          \RightLabel{$\exists$ R}
+          \UnaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash \exists y \, Q(y)$}
+        \end{prooftree}
+        
+        \end{frame}
+
 % \section{Verification of sequential systems}
 
 % \section{Verification of concurrent systems}
