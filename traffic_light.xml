@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd">
+<nta>
+  <declaration>
+    clock x;
+  </declaration>
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+    <location id="id0" x="0" y="0">
+      <name>Green</name>
+      <label kind="invariant" x="-15" y="-30">x &lt;= 10</label>
+    </location>
+    <location id="id1" x="150" y="0">
+      <name>Red</name>
+      <label kind="invariant" x="135" y="-30">x &lt;= 5</label>
+    </location>
+    <init ref="id0"/>
+    <transition>
+      <source ref="id0"/>
+      <target ref="id1"/>
+      <label kind="guard" x="60" y="-30">x == 10</label>
+      <label kind="assignment" x="60" y="-15">x = 0</label>
+    </transition>
+    <transition>
+      <source ref="id1"/>
+      <target ref="id0"/>
+      <label kind="guard" x="210" y="-30">x == 5</label>
+      <label kind="assignment" x="210" y="-15">x = 0</label>
+    </transition>
+  </template>
+  <system>
+    TrafficLight = TrafficLight();
+    system TrafficLight;
+  </system>
+</nta>
+
