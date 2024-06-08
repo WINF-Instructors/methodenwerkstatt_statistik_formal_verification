@@ -14,6 +14,8 @@
 \usepackage{xcolor}
 \usepackage{mathrsfs}  
 \usepackage{bussproofs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, positioning}
 \graphicspath{ {./images/} }
 %\usetheme{Boadilla}
 %\usecolortheme{crane}
@@ -31,19 +33,83 @@
 \begin{itemize}
 \item Obtain an initial understanding of formal concepts
 \item Survey of classical and recent approaches to formal verification
+\item Also establish the bridge to related work and future research directions I am aiming at
  
 \end{itemize}
 
 \end{frame}
+\begin{frame}{My Research Focus}
+  My background: \textbf{formal verification} (particularly model-driven engineering of embedded or cyber-physical systems) and \textbf{security}. 
+  Recently, also \textbf{machine learning}. 
+
+  So, in essence, I am interested in \textbf{safety} and \textbf{security} of \textbf{AI-enabled systems} or the application of \textbf{Machine Learning} to classical approaches for the verification of safety and security of systems.
+  \begin{center}
+  \begin{tikzpicture}
+    % Colors with opacity
+    \definecolor{color1}{RGB}{255, 200, 200}
+    \definecolor{color2}{RGB}{200, 255, 200}
+    \definecolor{color3}{RGB}{200, 200, 255}
+    
+    % Circles
+    \draw[fill=color1, fill opacity=0.4] (0,0) circle (1.5cm);
+    \draw[fill=color2, fill opacity=0.4] (2,0) circle (1.5cm);
+    \draw[fill=color3, fill opacity=0.4] (1, 1.3) circle (1.5cm);
+    
+    % Darker intersections
+    \begin{scope}
+      \clip (0,0) circle (1.5cm);
+      \fill[color2, opacity=0.5] (2,0) circle (1.5cm);
+    \end{scope}
+    
+    \begin{scope}
+      \clip (0,0) circle (1.5cm);
+      \fill[color3, opacity=0.5] (1,1.3) circle (1.5cm);
+    \end{scope}
+    
+    \begin{scope}
+      \clip (2,0) circle (1.5cm);
+      \fill[color3, opacity=0.5] (1,1.3) circle (1.5cm);
+    \end{scope}
+    
+    \begin{scope}
+      \clip (0,0) circle (1.5cm);
+      \clip (2,0) circle (1.5cm);
+      \fill[color3, opacity=0.5] (1,1.3) circle (1.5cm);
+    \end{scope}
+  
+    % Annotations within the circles
+    \node at (-0.5, -0.5) {Safety};
+    \node at (2.5, -0.5) {Security};
+    \node at (1, 2) {\begin{tabular}{c} Machine \\ Learning \end{tabular}};
+    
+    % Line pointing to "Research Focus"
+  \draw[-, thick] (1, 0.6) -- (3, 2) node[above right] {Research Focus};
+  
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
 \begin{frame}
   \frametitle{Outline}
   \tableofcontents
 \end{frame}
 
 \section{Introduction}
-\begin{frame}{Why formal verification?}
+
+
+\begin{frame}
+  \frametitle{Embedded Systems}
   
-\end{frame}
+  \begin{center}
+    \includegraphics[width=\linewidth]{images/embedded_system.png}
+  \end{center}
+  
+  \end{frame}
+
+  \begin{frame}{Why formal verification?}
+  
+  \end{frame}
 
 \section{First-order logic}
 \begin{frame}{Language of first-order logic}
@@ -579,25 +645,55 @@
           \AxiomC{}
           \RightLabel{Premise}
           \UnaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y))$}
-          
+        
           \AxiomC{}
           \RightLabel{Premise}
           \UnaryInfC{$\forall x P(x)$}
         
           \RightLabel{$\forall$ L}
           \UnaryInfC{$P(a)$}
-          
+        
           \RightLabel{$\forall$ L}
           \UnaryInfC{$P(a) \rightarrow \exists y \, Q(y)$}
-          
+        
           \RightLabel{$\rightarrow$ E}
           \BinaryInfC{$\exists y \, Q(y)$}
-        
-          \RightLabel{$\exists$ R}
-          \UnaryInfC{$\exists y \, Q(y)$}
         \end{prooftree}
         
         \end{frame}
+
+        \begin{frame}
+          \frametitle{Example Deduction: \(\forall x (\exists y \, P(x, y) \rightarrow \forall z \, Q(z)), \exists u \, \forall v \, P(u, v) \vdash \forall w \, Q(w)\)}
+          
+          \begin{prooftree}
+            \AxiomC{}
+            \RightLabel{Premise}
+            \UnaryInfC{$\forall x (\exists y \, P(x, y) \rightarrow \forall z \, Q(z))$}
+          
+            \AxiomC{}
+            \RightLabel{Premise}
+            \UnaryInfC{$\exists u \, \forall v \, P(u, v)$}
+          
+            \RightLabel{$\exists$ L}
+            \UnaryInfC{$\forall v \, P(a, v) \quad [a \text{ arbitrary}]$}
+          
+            \RightLabel{$\forall$ L}
+            \UnaryInfC{$P(a, b) \quad [b \text{ arbitrary}]$}
+          
+            \RightLabel{$\forall$ L}
+            \UnaryInfC{$\exists y \, P(a, y) \rightarrow \forall z \, Q(z)$}
+          
+            \RightLabel{$\exists$ R}
+            \UnaryInfC{$\exists y \, P(a, y)$}
+          
+            \RightLabel{$\rightarrow$ E}
+            \BinaryInfC{$\forall z \, Q(z)$}
+          
+            \RightLabel{$\forall$ R}
+            \UnaryInfC{$\forall w \, Q(w)$}
+          \end{prooftree}
+          
+          \end{frame}
 %*****************
         \begin{frame}{Soundness and Completeness of Sequent Calculus}
         \begin{itemize}
