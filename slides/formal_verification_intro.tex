@@ -15,6 +15,7 @@
 \usepackage{mathrsfs}  
 \usepackage{bussproofs}
 \usepackage{tikz}
+\usepackage{stmaryrd}
 \usetikzlibrary{shapes.geometric, positioning}
 \graphicspath{ {./images/} }
 %\usetheme{Boadilla}
@@ -967,23 +968,92 @@
   \begin{frame}{The while language}
     The while language is a simple imperative programming language with the following constructs:
     \begin{itemize}
-    \item Assignment: $x:=E$, where $x$ is a variable and $E$ is an expression.
-    \item Sequence: $S_1;S_2$, where $S_1$ and $S_2$ are statements.
-    \item Conditional: $\text{if }B\text{ then }S_1\text{ else }S_2\text{ end}$, where $B$ is a boolean expression and $S_1$ and $S_2$ are statements.
-    \item Loop: $\text{while }B\text{ do }S\text{ end}$, where $B$ is a boolean expression and $S$ is a statement.
+      \item Arithmetic expressions: $E::=n\ |\ x\ |\ E+E\ |\ E-E\ |\ E*E\ |\ E/E$ (i.e., terms), where $n$ is a number and $x$ is a variable.
+      \item Boolean expressions: $B::=\text{true}\ |\ \text{false}\ |\ E=E\ |\ E<E\ |\ E\leq E\ |\ \text{not } B\ |\ B \text{ and } B\ |\ B\text{ or } B$.
+      \item Statements: $S::=\text{skip}\ |\ x:=E\ |\ S_1;S_2\ |\ \text{if }B\text{ then }S_1\text{ else }S_2 |\ \text{while }B\text{ do }S$.
     \end{itemize}
+    
+    \end{frame}
+
+    \begin{frame}{Semantics domains for while}
+      \begin{itemize}
+        \item Values: $V=\mathbb{Z}\cup\{\text{true},\text{false}\}$.
+        \item Interpretation for constants: $V\to\mathbb{Z}$
+        \item State: $\textbf{Var}\to V$, where $\textbf{Var}$ is the set of variables. We denote an update of a state by $\sigma'=\sigma[x\mapsto v]$, which means that $\sigma'(x)=v$ and $\sigma'(y)=\sigma(y)$ for $y\neq x$.
+        \item Expression interpretation: $E\to\textbf{State}\to\mathbb{Z}$. An application of an expression under a state is traditionally written as $val\llbracket E\rrbracket\sigma$.
+      \end{itemize}
+      The interpretation of an expression under a state is defined by induction on the structure of the expression.
+      \begin{itemize}
+        \item $val\llbracket n\rrbracket\sigma=n$
+        \item $val\llbracket x\rrbracket\sigma=\sigma(x)$
+        \item $val\llbracket E_1+E_2\rrbracket\sigma=val\llbracket E_1\rrbracket\sigma+val\llbracket E_2\rrbracket\sigma$
+        \item $val\llbracket\text{true}\rrbracket\sigma=\text{true}$
+        \item $val\llbracket E_1=E_2\rrbracket\sigma=\text{true}$ if $val\llbracket E_1\rrbracket\sigma=val\llbracket E_2\rrbracket\sigma$ and $\text{false}$ otherwise.
+        \item etc.
+      \end{itemize}
     \end{frame}
 
     \begin{frame}{Operational Semantics of while}
-      The operational semantics of the while language is defined by a transition relation $\rightarrow$ between states.
-      
-      A state is a mapping from variables to values.
-      
-      The transition relation is defined by inference rules of the form $\langle S, \sigma\rangle\rightarrow\sigma'$, where $S$ is a statement, $\sigma$ is a state, and $\sigma'$ is the resulting state.
+      It describes how the execution of while programs is done operationally.
+      \vspace*{0.5cm}
+      A transition system is a triple $(\Gamma, T,\to)$ where
+      \begin{itemize}
+        \item $\Gamma$ is a set of configurations. A configuration is a pair $(c,\sigma)$, where $c$ is a command and $\sigma$ is a state.
+        \item $T$ is a set of terminal configurations.
+        \item $\to\subseteq\Gamma\times\Gamma$ is a transition relation ($\to^*$ is the reflexive transitive closure of $\to$, $\to^+$ is the transitive closure of $\to$).
+      \end{itemize}
+      \vspace*{0.5cm}
+      There are two types of operational semantics:
+      \begin{itemize}
+        \item Small-step semantics: Describes the execution of a program step by step.
+        \item Big-step semantics: Describes the execution of a program in one step.
+      \end{itemize} 
+      We'll focus on small-step semantics.
       \end{frame}
       
       \begin{frame}{Operational Semantics of while}
         
+        \begin{prooftree}
+          \AxiomC{}
+          \RightLabel{Assign}
+          \UnaryInfC{$x:=E\to\sigma[x\mapsto val\llbracket E\rrbracket\sigma]$}
+        
+        \end{prooftree}
+        
+        \begin{prooftree}
+          \AxiomC{}
+          \RightLabel{Skip}
+          \UnaryInfC{$(\text{skip},c)\to\sigma$}
+        \end{prooftree}
+        \begin{columns}
+          \column{0.5\textwidth}
+        \begin{prooftree}
+          \AxiomC{$(c_1,\sigma)\to\sigma'$}
+          \RightLabel{Seq1}
+          \UnaryInfC{$(c_1;c_2,\sigma)\to(c_2,\sigma')$}
+        \end{prooftree}
+        \column{0.5\textwidth}
+        \begin{prooftree}
+          \AxiomC{$(c_1,\sigma)\to(c_1',\sigma')$}
+          \RightLabel{Seq2}
+          \UnaryInfC{$(c_1;c_2,\sigma)\to(c_1';c_2,\sigma')$}
+        \end{prooftree}
+      \end{columns}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{IF for $val\llbracket B\rrbracket\sigma=\text{true}$}
+        \UnaryInfC{$(\text{if }b\text{ then }c_1\text{ else }c_2,\sigma)\to(c_1,\sigma)$}
+      \end{prooftree}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{IF for $val\llbracket B\rrbracket\sigma=\text{false}$}
+        \UnaryInfC{$(\text{if }b\text{ then }c_1\text{ else }c_2,\sigma)\to(c_2,\sigma)$}
+      \end{prooftree}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{WHILE}
+        \UnaryInfC{$(\text{while }B\text{ do }c,\sigma)\to(\text{if }B\text{ then }c;\text{while }B\text{ do }c\text{ else skip},\sigma)$}
+      \end{prooftree}
       \end{frame}
 % \begin{frame}{Hoare's Calculus}
 %   Hoare's calculus is a calculus for proving properties of programs.
