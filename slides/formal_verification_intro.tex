@@ -190,6 +190,8 @@
   \begin{frame}{Models}
     An interpretation $\mathcal{M}$ is a model of a formula $\varphi$, denoted by $\mathcal{M}\models\varphi$, if for all assignments $\sigma$, $\mathcal{M}, \sigma\models\varphi$.
     
+    \vspace*{0.5cm}
+    A formula is satisfiable if it has a model, i.e., if there exists an interpretation $\mathcal{M}$ such that $\mathcal{M}\models\varphi$.
     
     
   \end{frame}
@@ -907,10 +909,210 @@
         \begin{itemize}
         \item A calculus is sound if all provable formulas are valid, denoted by $\vdash\varphi\Rightarrow\models\varphi$.
         \item A calculus is complete if all valid formulas are provable, denoted by $\models\varphi\Rightarrow\vdash\varphi$.
-        \item The sequent calculus is sound and complete for first-order logic.
         \end{itemize}
+
+        \vspace{0.5cm}
+        The sequent calculus is sound and complete for first-order logic, i.e.,
+        \begin{itemize}
+        \item $\vdash\Gamma\Rightarrow\Delta$, then $\models\Gamma\Rightarrow\Delta$.
+        \item $\models\Gamma\Rightarrow\Delta$, then $\models\Gamma\Rightarrow\Delta$.
+        \end{itemize}
+        \vspace*{0.5cm}
+
+        Proof of soundness by induction on the structure of the formulas.
+        Proof of completeness by constructing a Herbrand model.
       \end{frame}
-% \section{Verification of sequential systems}
+
+      \begin{frame}{Goedel's Incompleteness Theorem}
+
+        \begin{itemize}
+        \item Goedel's first incompleteness theorem states that in any consistent formal system that is powerful enough to express arithmetic, there are true statements that cannot be proven.
+        \item Goedel's second incompleteness theorem states that in any consistent formal system that is powerful enough to express arithmetic, the system cannot prove its own consistency.
+        \end{itemize}
+       \end{frame}
+
+       \begin{frame}{Rice's Theorem}
+        \begin{itemize}
+        \item Rice's theorem states that for any non-trivial property of partial functions, i.e., a property that is not true for all partial functions or not true for none, there is no algorithm that can decide whether a given program has that property.
+        \item A property is non-trivial if there are two partial functions that are computable and one has the property and the other does not.
+        \end{itemize}
+        \end{frame}
+
+        \begin{frame}{Halting Problem}
+          The halting problem is the problem of determining, given a program and an input, whether the program will eventually halt when run with that input.
+          
+          The halting problem is undecidable, i.e., there is no algorithm that can decide whether a given program halts on a given input.
+        \end{frame}
+
+        \begin{frame}{Some Conclusions}
+          \begin{itemize}
+            \item There are properties of programs that cannot be decided by an algorithm. 
+            \item There are properties of programs that cannot be verified by a formal system.
+            \item It is impossible to generally prove behavioural equivalence of programs.
+          \end{itemize}
+        
+          
+        \end{frame}
+\section{Verification of sequential systems}\
+
+\begin{frame}{Semantics of programs}
+
+  There are three main types of semantics for programs:
+  \begin{itemize}
+  \item Operational semantics: Describes the execution of programs.
+  \item Denotational semantics: Describes the meaning of programs (as a mathematical mapping of states).
+  \item Axiomatic semantics: Describes properties of programs.
+  \end{itemize}
+  \end{frame}
+  \begin{frame}{The while language}
+    The while language is a simple imperative programming language with the following constructs:
+    \begin{itemize}
+    \item Assignment: $x:=E$, where $x$ is a variable and $E$ is an expression.
+    \item Sequence: $S_1;S_2$, where $S_1$ and $S_2$ are statements.
+    \item Conditional: $\text{if }B\text{ then }S_1\text{ else }S_2\text{ end}$, where $B$ is a boolean expression and $S_1$ and $S_2$ are statements.
+    \item Loop: $\text{while }B\text{ do }S\text{ end}$, where $B$ is a boolean expression and $S$ is a statement.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Operational Semantics of while}
+      The operational semantics of the while language is defined by a transition relation $\rightarrow$ between states.
+      
+      A state is a mapping from variables to values.
+      
+      The transition relation is defined by inference rules of the form $\langle S, \sigma\rangle\rightarrow\sigma'$, where $S$ is a statement, $\sigma$ is a state, and $\sigma'$ is the resulting state.
+      \end{frame}
+      
+      \begin{frame}{Operational Semantics of while}
+        
+      \end{frame}
+% \begin{frame}{Hoare's Calculus}
+%   Hoare's calculus is a calculus for proving properties of programs.
+  
+%   A Hoare triple has the form $\{P\}S\{Q\}$, where $P$ is the precondition, $S$ is the program, and $Q$ is the postcondition.
+  
+%   The interpretation is that if the precondition $P$ is true, then after executing the program $S$, the postcondition $Q$ is true.
+%   \end{frame}
+  
+%   \begin{frame}{Hoare's Calculus Rules}
+%     \begin{columns}
+%       \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{}
+%       \RightLabel{Skip}
+%       \UnaryInfC{$\{P\}\text{skip}\{P\}$}
+%     \end{prooftree}
+%     \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{}
+%       \RightLabel{Assignment}
+%       \UnaryInfC{$\{P[x\leftarrow E]\}x:=E\{P\}$}
+%     \end{prooftree}
+%   \end{columns}
+  
+%     \begin{columns}
+  
+%     \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{$\{P\}S_1\{Q\}\hspace*{0.5cm}\{Q\}S_2\{R\}$}
+%       \RightLabel{Composition}
+%       \UnaryInfC{$\{P\}S_1;S_2\{R\}$}
+%     \end{prooftree}
+%     \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{$\{P\}S_1\{Q\}\hspace*{0.5cm}\{P\}S_2\{Q\}$}
+%       \RightLabel{Consequence}
+%       \UnaryInfC{$\{P\}S_1\{Q\}$}
+%     \end{prooftree}
+%   \end{columns}
+  
+%     \begin{columns}
+  
+%       \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{$\{P\ \wedge\ B\}S\{Q\}$}
+%       \RightLabel{Consequence}
+%       \UnaryInfC{$\{P\}\text{if }B\text{ then }S\text{ else }T\text{ end}\{Q\}$}
+%     \end{prooftree}
+%     \column{0.5\textwidth}
+%     \begin{prooftree}
+%       \AxiomC{$\{P\ \wedge\ B\}S\{Q\}$}
+%       \RightLabel{Consequence}
+%       \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{P\ \wedge\ \neg B\}$}
+%     \end{prooftree}
+%   \end{columns}
+    
+%       \end{frame}
+    
+%       \begin{frame}{Hoare's Calculus Rules}
+%         \begin{columns}
+%           \column{0.5\textwidth}
+%         \begin{prooftree}
+%           \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%           \RightLabel{Loop Invariant}
+%           \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%         \end{prooftree}
+%         \column{0.5\textwidth}
+%         \begin{prooftree}
+%           \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%           \RightLabel{Loop Variant}
+%           \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%         \end{prooftree}
+%       \end{columns}
+    
+%         \begin{columns}
+      
+%         \column{0.5\textwidth}
+%         \begin{prooftree}
+%           \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%           \RightLabel{Loop Invariant}
+%           \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%         \end{prooftree}
+%         \column{0.5\textwidth}
+%         \begin{prooftree}
+%           \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%           \RightLabel{Loop Variant}
+%           \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%         \end{prooftree}
+%       \end{columns}
+    
+%         \end{frame}
+    
+%         \begin{frame}{Hoare's Calculus Rules}
+%           \begin{columns}
+%             \column{0.5\textwidth}
+%           \begin{prooftree}
+%             \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%             \RightLabel{Loop Invariant}
+%             \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%           \end{prooftree}
+%           \column{0.5\textwidth}
+%           \begin{prooftree}
+%             \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%             \RightLabel{Loop Variant}
+%             \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%           \end{prooftree}
+%         \end{columns}
+        
+%             \begin{columns}
+          
+%             \column{0.5\textwidth}
+%             \begin{prooftree}
+%               \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%               \RightLabel{Loop Invariant}
+%               \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%             \end{prooftree}
+%             \column{0.5\textwidth}
+%             \begin{prooftree}
+%               \AxiomC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\ \wedge\ \neg B\}$}
+%               \RightLabel{Loop Variant}
+%               \UnaryInfC{$\{P\}\text{while }B\text{ do }S\text{ end}\{Q\}$}
+%             \end{prooftree}
+%           \end{columns}
+          
+%               \end{frame}
+          
+            
+
 
 % \section{Verification of concurrent systems}
   \end{document}
