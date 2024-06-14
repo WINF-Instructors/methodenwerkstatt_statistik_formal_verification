@@ -215,18 +215,20 @@
   \end{frame}
 
   \begin{frame}{Term Substitution}
-    Let $\varphi$ be a formula, $x$ a variable, and $t$ a term. The formula $\varphi[x\mapsto t]$ is obtained by replacing all occurrences of $x$ in $\varphi$ by $t$. The substitution is defined inductively as follows:
+    Let $\varphi$ be a formula, $x$ a variable, and $t$ a term. The formula $\varphi[t/x]$ is obtained by replacing all occurrences of $x$ in $\varphi$ by $t$. The substitution is defined inductively as follows:
     \begin{itemize}
-    \item $(p(t_1, \ldots, t_n))[x\mapsto t]=p(t_1[x\mapsto t], \ldots, t_n[x\mapsto t])$.
-    \item $(\neg\psi)[x\mapsto t]=\neg\psi[x\mapsto t]$.
-    \item $(\psi_1\wedge\psi_2)[x\mapsto t]=\psi_1[x\mapsto t]\wedge\psi_2[x\mapsto t]$.
-    \item $(\psi_1\vee\psi_2)[x\mapsto t]=\psi_1[x\mapsto t]\vee\psi_2[x\mapsto t]$.
-    \item $(\psi_1\rightarrow\psi_2)[x\mapsto t]=\psi_1[x\mapsto t]\rightarrow\psi_2[x\mapsto t]$.
-    \item   $(\forall y.\psi)[x\mapsto t]=\forall y.\psi[x\mapsto t]$ if $x\in FV(t)$.
-    \item $(\exists y.\psi)[x\mapsto t]=\exists y.\psi[x\mapsto t]$ if $x\in FV(t)$.
-    \item $(\forall x.\psi)[x\mapsto t]=\forall x.\psi$.
-    \item $(\exists x.\psi)[x\mapsto t]=\exists x.\psi$.
+    \item $(p(t_1, \ldots, t_n))[t/x]=p(t_1[t/x], \ldots, t_n[t/x])$.
+    \item $(\neg\psi)[t/x]=\neg\psi[t/x]$.
+    \item $(\psi_1\wedge\psi_2)[t/x]=\psi_1[t.x]\wedge\psi_2[t/x]$.
+    \item $(\psi_1\vee\psi_2)[t/x]=\psi_1[t/x]\vee\psi_2[t/x]$.
+    \item $(\psi_1\rightarrow\psi_2)[t/x]=\psi_1[t/x]\rightarrow\psi_2[t/x]$.
+    \item   $(\forall y.\psi)[t/x]=\forall y.\psi[t/x]$ if $x\in FV(t)$.
+    \item $(\exists y.\psi)[t/x]=\exists y.\psi[t/x]$ if $x\in FV(t)$.
+    \item $(\forall x.\psi)[t/x]=\forall x.\psi$.
+    \item $(\exists x.\psi)[t/x]=\exists x.\psi$.
     \end{itemize}
+
+    So, $\varphi[t/x]$ represents the formular obtained by substituting every \textbf{free} occurrence of the variable $x$ in $\varphi$ by the term $t$.
   \end{frame}
     
   \begin{frame}{Calculus}
@@ -240,460 +242,666 @@
 
 
 
-\begin{frame}
-  \frametitle{Natural Deduction Rules}
-  \begin{columns}
+% \begin{frame}
+%   \frametitle{Some Natural Deduction Rules}
+%   \begin{columns}
   
-  \column{0.5\textwidth}
-  \textbf{Conjunction Introduction ($\land$ I)}
-  \begin{prooftree}
-    \AxiomC{$A$}
-    \AxiomC{$B$}
-    \RightLabel{$\land$ I}
-    \BinaryInfC{$A \land B$}
-  \end{prooftree}
+%   \column{0.5\textwidth}
+%   \textbf{Conjunction Introduction ($\land$ I)}
+%   \begin{prooftree}
+%     \AxiomC{$A$}
+%     \AxiomC{$B$}
+%     \RightLabel{$\land$ I}
+%     \BinaryInfC{$A \land B$}
+%   \end{prooftree}
   
-  \vspace{10pt}
+%   \vspace{10pt}
   
-  \textbf{Conjunction Elimination ($\land$ E)}
-  \begin{prooftree}
-    \AxiomC{$A \land B$}
-    \RightLabel{$\land$ E$_1$}
-    \UnaryInfC{$A$}
-  \end{prooftree}
-  \begin{prooftree}
-    \AxiomC{$A \land B$}
-    \RightLabel{$\land$ E$_2$}
-    \UnaryInfC{$B$}
-  \end{prooftree}
+%   \textbf{Conjunction Elimination ($\land$ E)}
+%   \begin{prooftree}
+%     \AxiomC{$A \land B$}
+%     \RightLabel{$\land$ E$_1$}
+%     \UnaryInfC{$A$}
+%   \end{prooftree}
+%   \begin{prooftree}
+%     \AxiomC{$A \land B$}
+%     \RightLabel{$\land$ E$_2$}
+%     \UnaryInfC{$B$}
+%   \end{prooftree}
   
-  \column{0.5\textwidth}
-  \textbf{Disjunction Introduction ($\lor$ I)}
-  \begin{prooftree}
-    \AxiomC{$A$}
-    \RightLabel{$\lor$ I$_1$}
-    \UnaryInfC{$A \lor B$}
-  \end{prooftree}
-  \begin{prooftree}
-    \AxiomC{$B$}
-    \RightLabel{$\lor$ I$_2$}
-    \UnaryInfC{$A \lor B$}
-  \end{prooftree}
+%   \column{0.5\textwidth}
+%   \textbf{Disjunction Introduction ($\lor$ I)}
+%   \begin{prooftree}
+%     \AxiomC{$A$}
+%     \RightLabel{$\lor$ I$_1$}
+%     \UnaryInfC{$A \lor B$}
+%   \end{prooftree}
+%   \begin{prooftree}
+%     \AxiomC{$B$}
+%     \RightLabel{$\lor$ I$_2$}
+%     \UnaryInfC{$A \lor B$}
+%   \end{prooftree}
   
-  \vspace{10pt}
+%   \vspace{10pt}
   
-  \textbf{Disjunction Elimination ($\lor$ E)}
-  \begin{prooftree}
-    \AxiomC{$A \lor B$}
-    \AxiomC{$[A]$}
-    \noLine
-    \UnaryInfC{$\vdots$}
-    \noLine
-    \UnaryInfC{$C$}
-    \AxiomC{$[B]$}
-    \noLine
-    \UnaryInfC{$\vdots$}
-    \noLine
-    \UnaryInfC{$C$}
-    \RightLabel{$\lor$ E}
-    \TrinaryInfC{$C$}
-  \end{prooftree}
+%   \textbf{Disjunction Elimination ($\lor$ E)}
+%   \begin{prooftree}
+%     \AxiomC{$A \lor B$}
+%     \AxiomC{$[A]$}
+%     \noLine
+%     \UnaryInfC{$\vdots$}
+%     \noLine
+%     \UnaryInfC{$C$}
+%     \AxiomC{$[B]$}
+%     \noLine
+%     \UnaryInfC{$\vdots$}
+%     \noLine
+%     \UnaryInfC{$C$}
+%     \RightLabel{$\lor$ E}
+%     \TrinaryInfC{$C$}
+%   \end{prooftree}
   
-  \end{columns}
-  \end{frame}
+%   \end{columns}
+%   \end{frame}
   
-  \begin{frame}
-  \frametitle{Natural Deduction Rules (cont.)}
-  \begin{columns}
+  % \begin{frame}
+  % \frametitle{Natural Deduction Rules (cont.)}
+  % \begin{columns}
   
-  \column{0.5\textwidth}
-  \textbf{Implication Introduction ($\implies$ I)}
-  \begin{prooftree}
-    \AxiomC{$[A]$}
-    \noLine
-    \UnaryInfC{$\vdots$}
-    \noLine
-    \UnaryInfC{$B$}
-    \RightLabel{$\implies$ I}
-    \UnaryInfC{$A \implies B$}
-  \end{prooftree}
+  % \column{0.5\textwidth}
+  % \textbf{Implication Introduction ($\implies$ I)}
+  % \begin{prooftree}
+  %   \AxiomC{$[A]$}
+  %   \noLine
+  %   \UnaryInfC{$\vdots$}
+  %   \noLine
+  %   \UnaryInfC{$B$}
+  %   \RightLabel{$\implies$ I}
+  %   \UnaryInfC{$A \implies B$}
+  % \end{prooftree}
   
-  \vspace{10pt}
+  % \vspace{10pt}
   
-  \textbf{Implication Elimination (Modus Ponens, $\implies$ E)}
-  \begin{prooftree}
-    \AxiomC{$A \implies B$}
-    \AxiomC{$A$}
-    \RightLabel{$\implies$ E}
-    \BinaryInfC{$B$}
-  \end{prooftree}
+  % \textbf{Implication Elimination (Modus Ponens, $\implies$ E)}
+  % \begin{prooftree}
+  %   \AxiomC{$A \implies B$}
+  %   \AxiomC{$A$}
+  %   \RightLabel{$\implies$ E}
+  %   \BinaryInfC{$B$}
+  % \end{prooftree}
   
-  \column{0.5\textwidth}
-  \textbf{Negation Introduction ($\neg$ I)}
-  \begin{prooftree}
-    \AxiomC{$[A]$}
-    \noLine
-    \UnaryInfC{$\vdots$}
-    \noLine
-    \UnaryInfC{$\bot$}
-    \RightLabel{$\neg$ I}
-    \UnaryInfC{$\neg A$}
-  \end{prooftree}
+  % \column{0.5\textwidth}
+  % \textbf{Negation Introduction ($\neg$ I)}
+  % \begin{prooftree}
+  %   \AxiomC{$[A]$}
+  %   \noLine
+  %   \UnaryInfC{$\vdots$}
+  %   \noLine
+  %   \UnaryInfC{$\bot$}
+  %   \RightLabel{$\neg$ I}
+  %   \UnaryInfC{$\neg A$}
+  % \end{prooftree}
   
-  \vspace{10pt}
+  % \vspace{10pt}
   
-  \textbf{Negation Elimination ($\neg$ E)}
-  \begin{prooftree}
-    \AxiomC{$A$}
-    \AxiomC{$\neg A$}
-    \RightLabel{$\neg$ E}
-    \BinaryInfC{$\bot$}
-  \end{prooftree}
+  % \textbf{Negation Elimination ($\neg$ E)}
+  % \begin{prooftree}
+  %   \AxiomC{$A$}
+  %   \AxiomC{$\neg A$}
+  %   \RightLabel{$\neg$ E}
+  %   \BinaryInfC{$\bot$}
+  % \end{prooftree}
   
-  \end{columns}
-  \end{frame}
+  % \end{columns}
+  % \end{frame}
   
-  \begin{frame}
-  \frametitle{Natural Deduction Rules (cont.)}
-  \begin{columns}
+  % \begin{frame}
+  % \frametitle{Natural Deduction Rules (cont.)}
+  % \begin{columns}
   
-  \column{0.5\textwidth}
-  \textbf{Double Negation Elimination ($\neg\neg$ E)}
-  \begin{prooftree}
-    \AxiomC{$\neg\neg A$}
-    \RightLabel{$\neg\neg$ E}
-    \UnaryInfC{$A$}
-  \end{prooftree}
+  % \column{0.5\textwidth}
+  % \textbf{Double Negation Elimination ($\neg\neg$ E)}
+  % \begin{prooftree}
+  %   \AxiomC{$\neg\neg A$}
+  %   \RightLabel{$\neg\neg$ E}
+  %   \UnaryInfC{$A$}
+  % \end{prooftree}
   
-  \vspace{10pt}
+  % \vspace{10pt}
   
-  \textbf{Biconditional Introduction ($\iff$ I)}
-  \begin{prooftree}
-    \AxiomC{$A \implies B$}
-    \AxiomC{$B \implies A$}
-    \RightLabel{$\iff$ I}
-    \BinaryInfC{$A \iff B$}
-  \end{prooftree}
+  % \textbf{Biconditional Introduction ($\iff$ I)}
+  % \begin{prooftree}
+  %   \AxiomC{$A \implies B$}
+  %   \AxiomC{$B \implies A$}
+  %   \RightLabel{$\iff$ I}
+  %   \BinaryInfC{$A \iff B$}
+  % \end{prooftree}
   
-  \column{0.5\textwidth}
-  \textbf{Biconditional Elimination ($\iff$ E)}
-  \begin{prooftree}
-    \AxiomC{$A \iff B$}
-    \RightLabel{$\iff$ E$_1$}
-    \UnaryInfC{$A \implies B$}
-  \end{prooftree}
-  \begin{prooftree}
-    \AxiomC{$A \iff B$}
-    \RightLabel{$\iff$ E$_2$}
-    \UnaryInfC{$B \implies A$}
-  \end{prooftree}
+  % \column{0.5\textwidth}
+  % \textbf{Biconditional Elimination ($\iff$ E)}
+  % \begin{prooftree}
+  %   \AxiomC{$A \iff B$}
+  %   \RightLabel{$\iff$ E$_1$}
+  %   \UnaryInfC{$A \implies B$}
+  % \end{prooftree}
+  % \begin{prooftree}
+  %   \AxiomC{$A \iff B$}
+  %   \RightLabel{$\iff$ E$_2$}
+  %   \UnaryInfC{$B \implies A$}
+  % \end{prooftree}
   
-  \end{columns}
-  \end{frame}
+  % \end{columns}
+  % \end{frame}
 
-  \begin{frame}
-    \frametitle{Natural Deduction Rules: Quantifiers}
+  % \begin{frame}
+  %   \frametitle{Some Natural Deduction Rules: Quantifiers}
+  %   \begin{columns}
+    
+  %   \column{0.5\textwidth}
+  %   \textbf{Universal Introduction ($\forall$ I)}
+  %   \begin{prooftree}
+  %     \AxiomC{$[x]$}
+  %     \noLine
+  %     \UnaryInfC{$\vdots$}
+  %     \noLine
+  %     \UnaryInfC{$A(x)$}
+  %     \RightLabel{$\forall$ I}
+  %     \UnaryInfC{$\forall x \, A(x)$}
+  %   \end{prooftree}
+    
+  %   \vspace{10pt}
+    
+  %   \textbf{Universal Elimination ($\forall$ E)}
+  %   \begin{prooftree}
+  %     \AxiomC{$\forall x \, A(x)$}
+  %     \RightLabel{$\forall$ E}
+  %     \UnaryInfC{$A(t)$}
+  %   \end{prooftree}
+    
+  %   \column{0.5\textwidth}
+  %   \textbf{Existential Introduction ($\exists$ I)}
+  %   \begin{prooftree}
+  %     \AxiomC{$A(t)$}
+  %     \RightLabel{$\exists$ I}
+  %     \UnaryInfC{$\exists x \, A(x)$}
+  %   \end{prooftree}
+    
+  %   \vspace{10pt}
+    
+  %   \textbf{Existential Elimination ($\exists$ E)}
+  %   \begin{prooftree}
+  %     \AxiomC{$\exists x \, A(x)$}
+  %     \AxiomC{$[A(x)]$}
+  %     \noLine
+  %     \UnaryInfC{$\vdots$}
+  %     \noLine
+  %     \UnaryInfC{$C$}
+  %     \RightLabel{$\exists$ E}
+  %     \BinaryInfC{$C$}
+  %   \end{prooftree}
+    
+  %   \end{columns}
+  %   \end{frame}
+
+    % \begin{frame}
+    %   \frametitle{Example Deduction: \(\forall x (P(x) \rightarrow Q(x)), \forall x P(x) \vdash \forall x Q(x)\)}
+      
+    %   \begin{prooftree}
+    %     \AxiomC{}
+    %     \RightLabel{Premise}
+    %     \UnaryInfC{$\forall x (P(x) \rightarrow Q(x))$}
+    %     \AxiomC{}
+    %     \RightLabel{Premise}
+    %     \UnaryInfC{$\forall x P(x)$}
+    %     \RightLabel{$\forall$ E}
+    %     \UnaryInfC{$P(a)$}
+    %     \RightLabel{$\forall$ E}
+    %     \UnaryInfC{$P(a) \rightarrow Q(a)$}
+    %     \RightLabel{$\rightarrow$ E}
+    %     \BinaryInfC{$Q(a)$}
+    %     \RightLabel{$\forall$ I}
+    %     \UnaryInfC{$\forall x Q(x)$}
+    %   \end{prooftree}
+      
+      % \end{frame}
+%*****************
+
+\begin{frame}{Sequent Calculus}
+  
+
+  In sequent calculus, we have sequences $\Gamma\vdash\Delta$, where $\Gamma$ and $\Delta$ are sets of formulas.
+  \vspace*{1cm}
+
+  The interpretation is that if all formulas in $\Gamma$ are true, then at least one formula in $\Delta$ is true.
+  \end{frame}
+  
+  
+    \begin{frame}{Sequent Calculus Rules}
+      \begin{columns}
+        \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{-}
+        \RightLabel{Taut}
+        \UnaryInfC{$\Gamma, \varphi \Rightarrow \varphi, \Delta$}
+      \end{prooftree}
+      \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$\Gamma\Rightarrow\Delta,\varphi\hspace*{0.5cm}\varphi,\Pi\Rightarrow\Lambda$}
+        \RightLabel{Cut}
+        \UnaryInfC{$\Gamma,\Pi \Rightarrow\Delta,\Lambda$}
+      \end{prooftree}
+    \end{columns}
+
+      \begin{columns}
+    
+      \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{-}
+        \RightLabel{$\bot \Rightarrow$}
+        \UnaryInfC{$\Gamma, \bot \Rightarrow \Delta$}
+      \end{prooftree}
+      \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{-}
+        \RightLabel{$\Rightarrow\top$}
+        \UnaryInfC{$\Gamma\Rightarrow \Delta,\top$}
+      \end{prooftree}
+    \end{columns}
+
+
+    \begin{columns}
+      \column{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\Gamma\Rightarrow\Delta$}
+      \RightLabel{Weakening left}
+      \UnaryInfC{$\varphi,\Gamma\Rightarrow\Delta$}
+    \end{prooftree}
+    \column{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\Gamma\Rightarrow\Delta$}
+      \RightLabel{Weakening right}
+      \UnaryInfC{$\Gamma\Rightarrow\Delta,\varphi$}
+    \end{prooftree}
+  \end{columns}
+
+  \begin{columns}
+    \column{0.5\textwidth}
+  \begin{prooftree}
+    \AxiomC{$\varphi,\varphi,\Gamma\Rightarrow\Delta$}
+    \RightLabel{Contraction left}
+    \UnaryInfC{$\varphi,\Gamma\Rightarrow\Delta$}
+  \end{prooftree}
+  \column{0.5\textwidth}
+  \begin{prooftree}
+    \AxiomC{$\Gamma\Rightarrow\Delta,\varphi,\varphi$}
+    \RightLabel{Contraction right}
+    \UnaryInfC{$\Gamma\Rightarrow\Delta,\varphi$}
+  \end{prooftree}
+\end{columns}
+
+\begin{columns}
+  \column{0.5\textwidth}
+\begin{prooftree}
+  \AxiomC{$\Gamma,\varphi,\psi,\Pi\Rightarrow\Delta$}
+  \RightLabel{Exchange left}
+  \UnaryInfC{$\Gamma,\psi,\varphi,\Pi\Rightarrow\Delta$}
+\end{prooftree}
+\column{0.5\textwidth}
+\begin{prooftree}
+  \AxiomC{$\Gamma\Rightarrow\Delta,\varphi,\psi,\Lambda$}
+  \RightLabel{Exchange right}
+  \UnaryInfC{$\Gamma\Rightarrow\Delta,\psi,\varphi,\Lambda$}
+\end{prooftree}
+\end{columns}
+
+  
+  \end{frame}
+  \begin{frame}{Sequent Calculus Rules}
+
+    \begin{columns}
+  
+    \column{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{-}
+      \RightLabel{$\bot \Rightarrow$}
+      \UnaryInfC{$\Gamma, \bot \Rightarrow \Delta$}
+    \end{prooftree}
+    \column{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{-}
+      \RightLabel{$\Rightarrow\top$}
+      \UnaryInfC{$\Gamma\Rightarrow \Delta,\top$}
+    \end{prooftree}
+  \end{columns}
+
+
     \begin{columns}
     
-    \column{0.5\textwidth}
-    \textbf{Universal Introduction ($\forall$ I)}
-    \begin{prooftree}
-      \AxiomC{$[x]$}
-      \noLine
-      \UnaryInfC{$\vdots$}
-      \noLine
-      \UnaryInfC{$A(x)$}
-      \RightLabel{$\forall$ I}
-      \UnaryInfC{$\forall x \, A(x)$}
-    \end{prooftree}
-    
-    \vspace{10pt}
-    
-    \textbf{Universal Elimination ($\forall$ E)}
-    \begin{prooftree}
-      \AxiomC{$\forall x \, A(x)$}
-      \RightLabel{$\forall$ E}
-      \UnaryInfC{$A(t)$}
-    \end{prooftree}
-    
-    \column{0.5\textwidth}
-    \textbf{Existential Introduction ($\exists$ I)}
-    \begin{prooftree}
-      \AxiomC{$A(t)$}
-      \RightLabel{$\exists$ I}
-      \UnaryInfC{$\exists x \, A(x)$}
-    \end{prooftree}
-    
-    \vspace{10pt}
-    
-    \textbf{Existential Elimination ($\exists$ E)}
-    \begin{prooftree}
-      \AxiomC{$\exists x \, A(x)$}
-      \AxiomC{$[A(x)]$}
-      \noLine
-      \UnaryInfC{$\vdots$}
-      \noLine
-      \UnaryInfC{$C$}
-      \RightLabel{$\exists$ E}
-      \BinaryInfC{$C$}
-    \end{prooftree}
-    
-    \end{columns}
-    \end{frame}
+      \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$\Gamma\Rightarrow\Delta,\varphi$}
+        \RightLabel{$\neg\Rightarrow$}
+        \UnaryInfC{$\Gamma,\neg \varphi\Rightarrow \Delta$}
+      \end{prooftree}
+      \column{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$\Gamma,\varphi\Rightarrow\Delta$}
+        \RightLabel{$\Rightarrow\neg$}
+        \UnaryInfC{$\Gamma\Rightarrow \Delta,\neg\varphi$}
+      \end{prooftree}
+      \end{columns}
+      
 
-    \begin{frame}
-      \frametitle{Example Deduction: \(\forall x (P(x) \rightarrow Q(x)), \forall x P(x) \vdash \forall x Q(x)\)}
-      
-      \begin{prooftree}
-        \AxiomC{}
-        \RightLabel{Premise}
-        \UnaryInfC{$\forall x (P(x) \rightarrow Q(x))$}
-        \AxiomC{}
-        \RightLabel{Premise}
-        \UnaryInfC{$\forall x P(x)$}
-        \RightLabel{$\forall$ E}
-        \UnaryInfC{$P(a)$}
-        \RightLabel{$\forall$ E}
-        \UnaryInfC{$P(a) \rightarrow Q(a)$}
-        \RightLabel{$\rightarrow$ E}
-        \BinaryInfC{$Q(a)$}
-        \RightLabel{$\forall$ I}
-        \UnaryInfC{$\forall x Q(x)$}
-      \end{prooftree}
-      
-      \end{frame}
-%*****************
-    \begin{frame}
-      \frametitle{Sequent Calculus Rules: Logical Connectives}
       \begin{columns}
-      
-      \column{0.5\textwidth}
-      \textbf{Conjunction Rules ($\land$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A$}
-        \AxiomC{$\Gamma \vdash B$}
-        \RightLabel{$\land$ R}
-        \BinaryInfC{$\Gamma \vdash A \land B$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A \land B \vdash \Delta$}
-        \RightLabel{$\land$ L$_1$}
-        \UnaryInfC{$\Gamma, A \vdash \Delta$}
-      \end{prooftree}
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A \land B \vdash \Delta$}
-        \RightLabel{$\land$ L$_2$}
-        \UnaryInfC{$\Gamma, B \vdash \Delta$}
-      \end{prooftree}
-      
-      \column{0.5\textwidth}
-      \textbf{Disjunction Rules ($\lor$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A$}
-        \RightLabel{$\lor$ R$_1$}
-        \UnaryInfC{$\Gamma \vdash A \lor B$}
-      \end{prooftree}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash B$}
-        \RightLabel{$\lor$ R$_2$}
-        \UnaryInfC{$\Gamma \vdash A \lor B$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A \vdash \Delta$}
-        \AxiomC{$\Gamma, B \vdash \Delta$}
-        \RightLabel{$\lor$ L}
-        \BinaryInfC{$\Gamma, A \lor B \vdash \Delta$}
-      \end{prooftree}
-      
-      \end{columns}
-      \end{frame}
-      
-      \begin{frame}
-      \frametitle{Sequent Calculus Rules: Logical Connectives (cont.)}
-      \begin{columns}
-      
-      \column{0.5\textwidth}
-      \textbf{Implication Rules ($\implies$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A \vdash B$}
-        \RightLabel{$\implies$ R}
-        \UnaryInfC{$\Gamma \vdash A \implies B$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A$}
-        \AxiomC{$\Gamma, B \vdash \Delta$}
-        \RightLabel{$\implies$ L}
-        \BinaryInfC{$\Gamma, A \implies B \vdash \Delta$}
-      \end{prooftree}
-      
-      \column{0.5\textwidth}
-      \textbf{Negation Rules ($\neg$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A \vdash \Delta$}
-        \RightLabel{$\neg$ R}
-        \UnaryInfC{$\Gamma \vdash \neg A$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A$}
-        \RightLabel{$\neg$ L}
-        \UnaryInfC{$\Gamma, \neg A \vdash \Delta$}
-      \end{prooftree}
-      
-      \end{columns}
-      \end{frame}
-      
-      \begin{frame}
-      \frametitle{Sequent Calculus Rules: Quantifiers}
-      \begin{columns}
-      
-      \column{0.5\textwidth}
-      \textbf{Universal Quantifier ($\forall$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A(x)$}
-        \RightLabel{$\forall$ R}
-        \UnaryInfC{$\Gamma \vdash \forall x \, A(x)$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A(t) \vdash \Delta$}
-        \RightLabel{$\forall$ L}
-        \UnaryInfC{$\Gamma, \forall x \, A(x) \vdash \Delta$}
-      \end{prooftree}
-      
-      \column{0.5\textwidth}
-      \textbf{Existential Quantifier ($\exists$)}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A(t)$}
-        \RightLabel{$\exists$ R}
-        \UnaryInfC{$\Gamma \vdash \exists x \, A(x)$}
-      \end{prooftree}
-      
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A(x) \vdash \Delta$}
-        \RightLabel{$\exists$ L}
-        \UnaryInfC{$\Gamma, \exists x \, A(x) \vdash \Delta$}
-      \end{prooftree}
-      
-      \end{columns}
-      \end{frame}
-      
-      \begin{frame}
-      \frametitle{Sequent Calculus Rules: Structural Rules}
-      \begin{columns}
-      
-      \column{0.5\textwidth}
-      \textbf{Weakening}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash \Delta$}
-        \RightLabel{WL}
-        \UnaryInfC{$\Gamma, A \vdash \Delta$}
-      \end{prooftree}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash \Delta$}
-        \RightLabel{WR}
-        \UnaryInfC{$\Gamma \vdash \Delta, A$}
-      \end{prooftree}
-      
-      \vspace{10pt}
-      
-      \textbf{Contraction}
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A, A \vdash \Delta$}
-        \RightLabel{CL}
-        \UnaryInfC{$\Gamma, A \vdash \Delta$}
-      \end{prooftree}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash \Delta, A, A$}
-        \RightLabel{CR}
-        \UnaryInfC{$\Gamma \vdash \Delta, A$}
-      \end{prooftree}
-      
-      \column{0.5\textwidth}
-      \textbf{Exchange}
-      \begin{prooftree}
-        \AxiomC{$\Gamma, A, B, \Sigma \vdash \Delta$}
-        \RightLabel{EL}
-        \UnaryInfC{$\Gamma, B, A, \Sigma \vdash \Delta$}
-      \end{prooftree}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash \Delta, A, B, \Pi$}
-        \RightLabel{ER}
-        \UnaryInfC{$\Gamma \vdash \Delta, B, A, \Pi$}
-      \end{prooftree}
-      
-      \vspace{10pt}
-      
-      \textbf{Cut}
-      \begin{prooftree}
-        \AxiomC{$\Gamma \vdash A, \Delta$}
-        \AxiomC{$\Gamma, A \vdash \Delta$}
-        \RightLabel{Cut}
-        \BinaryInfC{$\Gamma \vdash \Delta$}
-      \end{prooftree}
-      
-      \end{columns}
-      \end{frame}
-
-      \begin{frame}
-        \frametitle{Example Deduction: \(\forall x (P(x) \rightarrow \exists y \, Q(y)), \forall x P(x) \vdash \exists y \, Q(y)\)}
-        
+    
+        \column{0.5\textwidth}
         \begin{prooftree}
-          \AxiomC{}
-          \RightLabel{Premise}
-          \UnaryInfC{$\forall x (P(x) \rightarrow \exists y \, Q(y))$}
-        
-          \AxiomC{}
-          \RightLabel{Premise}
-          \UnaryInfC{$\forall x P(x)$}
-        
-          \RightLabel{$\forall$ L}
-          \UnaryInfC{$P(a)$}
-        
-          \RightLabel{$\forall$ L}
-          \UnaryInfC{$P(a) \rightarrow \exists y \, Q(y)$}
-        
-          \RightLabel{$\rightarrow$ E}
-          \BinaryInfC{$\exists y \, Q(y)$}
+          \AxiomC{$\Gamma,\varphi\Rightarrow\Delta \hspace*{0.5cm} \Gamma,\psi\Rightarrow \Delta$}
+          \RightLabel{$\vee\Rightarrow$}
+          \UnaryInfC{$\Gamma,\varphi\vee \psi\Rightarrow \Delta$}
         \end{prooftree}
+        \column{0.5\textwidth}
+        \begin{prooftree}
+          \AxiomC{$\Gamma\Rightarrow\Delta,\varphi,\psi$}
+          \RightLabel{$\Rightarrow\vee$}
+          \UnaryInfC{$\Gamma\Rightarrow \Delta,\varphi\vee \psi$}
+        \end{prooftree}
+        \end{columns}
+
+        \begin{columns}
+    
+          \column{0.5\textwidth}
+          \begin{prooftree}
+            \AxiomC{$\Gamma,\varphi,\psi\Rightarrow\Delta$}
+            \RightLabel{$\wedge\Rightarrow$}
+            \UnaryInfC{$\Gamma,\varphi\wedge \psi\Rightarrow \Delta$}
+          \end{prooftree}
+          \column{0.5\textwidth}
+          \begin{prooftree}
+            \AxiomC{$\Gamma\Rightarrow\Delta,\varphi \hspace*{0.5cm}\Gamma\Rightarrow\Delta,\psi$}
+            \RightLabel{$\Rightarrow\wedge$}
+            \UnaryInfC{$\Gamma\Rightarrow \Delta,\varphi\wedge \psi$}
+          \end{prooftree}
+          \end{columns}
+
+
+          \begin{columns}
+    
+            \column{0.5\textwidth}
+            \begin{prooftree}
+              \AxiomC{$\Gamma\Rightarrow\Delta,\varphi\hspace*{0.5cm}\psi,\Pi\Rightarrow\Lambda$}
+              \RightLabel{$\to\Rightarrow$}
+              \UnaryInfC{$\varphi\to\psi,\Gamma,\Pi\Rightarrow \Delta,\Lambda$}
+            \end{prooftree}
+            \column{0.5\textwidth}
+            \begin{prooftree}
+              \AxiomC{$\Gamma,\varphi\Rightarrow\Delta,\psi$}
+              \RightLabel{$\Rightarrow\to$}
+              \UnaryInfC{$\Gamma\Rightarrow \Delta,\varphi\to \psi$}
+            \end{prooftree}
+            \end{columns}
+
+
+
+      \end{frame}
+
+      \begin{frame}{Sequent Calculus Rules}
+        \begin{columns}
+    
+          \column{0.5\textwidth}
+          \begin{prooftree}
+            \AxiomC{$\Gamma,\varphi[t/x]\Rightarrow\Delta$}
+            \RightLabel{$\forall\Rightarrow$}
+            \UnaryInfC{$\Gamma,\forall x.\varphi(x)\Rightarrow\Delta$}
+          \end{prooftree}
+          \column{0.5\textwidth}
+          \begin{prooftree}
+            \AxiomC{$\Gamma\Rightarrow\Delta,\varphi[y/x]$}
+            \RightLabel{$\Rightarrow\forall$}
+            \UnaryInfC{$\Gamma\Rightarrow\Delta,\forall x.\varphi(x)$}
+          \end{prooftree}
+          \end{columns}
+
+          
+          \begin{columns}
+    
+            \column{0.5\textwidth}
+            \begin{prooftree}
+              \AxiomC{$\Gamma,\varphi[y/x]\Rightarrow\Delta$}
+              \RightLabel{$\exists\Rightarrow$}
+              \UnaryInfC{$\Gamma,\exists x.\varphi(x)\Rightarrow\Delta$}
+            \end{prooftree}
+            \column{0.5\textwidth}
+            \begin{prooftree}
+              \AxiomC{$\Gamma\Rightarrow\Delta,\exists x.\varphi(x),\varphi[t/x]$}
+              \RightLabel{$\Rightarrow\exists$}
+              \UnaryInfC{$\Gamma\Rightarrow\Delta,\exists x.\varphi(x)$}
+            \end{prooftree}
+            \end{columns}
+
+            \vspace{0.5cm}
+
+            In the quantifier rules, $t$ is a term, and $y$ is a 'fresh' variable, i.e., a variable that does not occur in $\Gamma$, $\Delta$, or $\varphi$. 
+            
+            Alternatively, the rules can also be stated in the form
         
-        \end{frame}
+            \begin{prooftree}
+              \AxiomC{$\Gamma\Rightarrow\Delta,\varphi$}
+              \RightLabel{$\Rightarrow\forall$}
+              \UnaryInfC{$\Gamma\Rightarrow\Delta,\forall x.\varphi(x)$}
+            \end{prooftree}
+
+            Here, it must be guaranteed that $x$ is not free in any formula in $\Gamma$ or $\Delta$. The existential formula can be handled similarly.
+      \end{frame}
+      
+    %   \begin{frame}
+    %   \frametitle{Sequent Calculus Rules: Logical Connectives (cont.)}
+    %   \begin{columns}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Implication Rules ($\implies$)}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A \vdash B$}
+    %     \RightLabel{$\implies$ R}
+    %     \UnaryInfC{$\Gamma \vdash A \implies B$}
+    %   \end{prooftree}
+      
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash A$}
+    %     \AxiomC{$\Gamma, B \vdash \Delta$}
+    %     \RightLabel{$\implies$ L}
+    %     \BinaryInfC{$\Gamma, A \implies B \vdash \Delta$}
+    %   \end{prooftree}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Negation Rules ($\neg$)}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A \vdash \Delta$}
+    %     \RightLabel{$\neg$ R}
+    %     \UnaryInfC{$\Gamma \vdash \neg A$}
+    %   \end{prooftree}
+      
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash A$}
+    %     \RightLabel{$\neg$ L}
+    %     \UnaryInfC{$\Gamma, \neg A \vdash \Delta$}
+    %   \end{prooftree}
+      
+    %   \end{columns}
+    %   \end{frame}
+      
+    %   \begin{frame}
+    %   \frametitle{Sequent Calculus Rules: Quantifiers}
+    %   \begin{columns}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Universal Quantifier ($\forall$)}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash A(x)$}
+    %     \RightLabel{$\forall$ R}
+    %     \UnaryInfC{$\Gamma \vdash \forall x \, A(x)$}
+    %   \end{prooftree}
+      
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A(t) \vdash \Delta$}
+    %     \RightLabel{$\forall$ L}
+    %     \UnaryInfC{$\Gamma, \forall x \, A(x) \vdash \Delta$}
+    %   \end{prooftree}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Existential Quantifier ($\exists$)}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash A(t)$}
+    %     \RightLabel{$\exists$ R}
+    %     \UnaryInfC{$\Gamma \vdash \exists x \, A(x)$}
+    %   \end{prooftree}
+      
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A(x) \vdash \Delta$}
+    %     \RightLabel{$\exists$ L}
+    %     \UnaryInfC{$\Gamma, \exists x \, A(x) \vdash \Delta$}
+    %   \end{prooftree}
+      
+    %   \end{columns}
+    %   \end{frame}
+      
+    %   \begin{frame}
+    %   \frametitle{Sequent Calculus Rules: Structural Rules}
+    %   \begin{columns}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Weakening}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash \Delta$}
+    %     \RightLabel{WL}
+    %     \UnaryInfC{$\Gamma, A \vdash \Delta$}
+    %   \end{prooftree}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash \Delta$}
+    %     \RightLabel{WR}
+    %     \UnaryInfC{$\Gamma \vdash \Delta, A$}
+    %   \end{prooftree}
+      
+    %   \vspace{10pt}
+      
+    %   \textbf{Contraction}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A, A \vdash \Delta$}
+    %     \RightLabel{CL}
+    %     \UnaryInfC{$\Gamma, A \vdash \Delta$}
+    %   \end{prooftree}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash \Delta, A, A$}
+    %     \RightLabel{CR}
+    %     \UnaryInfC{$\Gamma \vdash \Delta, A$}
+    %   \end{prooftree}
+      
+    %   \column{0.5\textwidth}
+    %   \textbf{Exchange}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma, A, B, \Sigma \vdash \Delta$}
+    %     \RightLabel{EL}
+    %     \UnaryInfC{$\Gamma, B, A, \Sigma \vdash \Delta$}
+    %   \end{prooftree}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash \Delta, A, B, \Pi$}
+    %     \RightLabel{ER}
+    %     \UnaryInfC{$\Gamma \vdash \Delta, B, A, \Pi$}
+    %   \end{prooftree}
+      
+    %   \vspace{10pt}
+      
+    %   \textbf{Cut}
+    %   \begin{prooftree}
+    %     \AxiomC{$\Gamma \vdash A, \Delta$}
+    %     \AxiomC{$\Gamma, A \vdash \Delta$}
+    %     \RightLabel{Cut}
+    %     \BinaryInfC{$\Gamma \vdash \Delta$}
+    %   \end{prooftree}
+      
+    %   \end{columns}
+    %   \end{frame}
+
+      
 
         \begin{frame}
-          \frametitle{Example Deduction: \(\forall x (\exists y \, P(x, y) \rightarrow \forall z \, Q(z)), \exists u \, \forall v \, P(u, v) \vdash \forall w \, Q(w)\)}
+          \frametitle{Example Deduction: \(\forall x.(P(x)\wedge Q\Rightarrow\forall x.P(x)\)}
           
           \begin{prooftree}
             \AxiomC{}
-            \RightLabel{Premise}
-            \UnaryInfC{$\forall x (\exists y \, P(x, y) \rightarrow \forall z \, Q(z))$}
+            \RightLabel{Taut}
+            \UnaryInfC{$P(x),Q\Rightarrow P(x)$}
           
-            \AxiomC{}
-            \RightLabel{Premise}
-            \UnaryInfC{$\exists u \, \forall v \, P(u, v)$}
+            
+            \RightLabel{$\wedge\Rightarrow$ }
+            \UnaryInfC{$P(x)\wedge Q\Rightarrow P(x)$}
           
-            \RightLabel{$\exists$ L}
-            \UnaryInfC{$\forall v \, P(a, v) \quad [a \text{ arbitrary}]$}
+            \RightLabel{$\forall\Rightarrow$}
+            \UnaryInfC{$\forall x.(P(x\wedge Q)\Rightarrow P(x))$}
           
-            \RightLabel{$\forall$ L}
-            \UnaryInfC{$P(a, b) \quad [b \text{ arbitrary}]$}
+            \RightLabel{$\Rightarrow\forall$}
+            \UnaryInfC{$\forall x.(P(x)\wedge Q)\Rightarrow\forall x.P(x)$}
           
-            \RightLabel{$\forall$ L}
-            \UnaryInfC{$\exists y \, P(a, y) \rightarrow \forall z \, Q(z)$}
-          
-            \RightLabel{$\exists$ R}
-            \UnaryInfC{$\exists y \, P(a, y)$}
-          
-            \RightLabel{$\rightarrow$ E}
-            \BinaryInfC{$\forall z \, Q(z)$}
-          
-            \RightLabel{$\forall$ R}
-            \UnaryInfC{$\forall w \, Q(w)$}
           \end{prooftree}
-          
+          \vspace*{0.5cm}
+          Here, $\forall\Rightarrow$ uses $[x/x]$ as replacement, i.e., just the same free variable is taken.
           \end{frame}
+
+
+          \begin{frame}
+            \frametitle{Example Deduction: \(\forall x.(A\to B)\Rightarrow A\to\forall x.B\)}
+            
+            \begin{prooftree}
+              \AxiomC{}
+              \RightLabel{Taut}
+              \UnaryInfC{$A\Rightarrow A,B$}
+
+              \AxiomC{}
+              \RightLabel{Taut}
+              \UnaryInfC{$A,B\Rightarrow B$}
+            
+              
+              
+              \RightLabel{$\to\Rightarrow$ }
+              \BinaryInfC{$A,A\to B\Rightarrow B$}
+            
+             
+              \RightLabel{$\forall\Rightarrow$}
+              \UnaryInfC{$A,\forall x.(A\to B)\Rightarrow B$}
+            
+              \RightLabel{$\Rightarrow\forall$}
+              \UnaryInfC{$A,\forall x.(A\to B)\Rightarrow \forall x.B$}
+              \RightLabel{$\Rightarrow\to$}
+              \UnaryInfC{$\forall x.(A\to B)\Rightarrow A\to \forall x.B$}
+              
+            
+            \end{prooftree}
+            \vspace*{0.5cm}
+            Here, the application of $\Rightarrow\forall$ requires that $x$ is not free in $A$.
+
+            \end{frame}
+
+            \begin{frame}
+              \frametitle{Example of a Failing Deduction: \(\exists x.P(x)\wedge \exists x.Q(x)\Rightarrow\exists x.(P(x)\wedge Q(x))\)}
+              
+              \begin{prooftree}
+                \AxiomC{$P(x),Q(y)\Rightarrow P(x)\wedge Q(x)$}
+                \RightLabel{$\Rightarrow\exists$}
+                \UnaryInfC{$P(x),Q(y)\Rightarrow\exists x.(P(x)\wedge Q(x))$}
+                \RightLabel{$\exists\Rightarrow$}
+                \UnaryInfC{$P(x),\exists x.Q(x)\Rightarrow\exists x.(P(x)\wedge Q(x))$}
+                \RightLabel{$\exists\Rightarrow$}
+                \UnaryInfC{$\exists x.P(x),\exists x.Q(x)\Rightarrow\exists x.(P(x)\wedge Q(x))$}
+                \RightLabel{$\wedge\Rightarrow$}
+                \UnaryInfC{$\exists x.P(x)\wedge \exists x.Q(x)\Rightarrow\exists x.(P(x)\wedge Q(x))$}
+              
+              \end{prooftree}
+              \vspace*{0.5cm}
+              Here, the deduction fails because the variable $x$ is not fresh in the application of $\exists\Rightarrow$ and therefore the new variable $y$ is introduced.
+              However, then the deduction cannot be completed.
+  
+              \end{frame}
+
 %*****************
         \begin{frame}{Soundness and Completeness of Sequent Calculus}
         \begin{itemize}
